@@ -184,7 +184,7 @@ JNIEXPORT jstring JNICALL Java_com_jiangdg_jnilearning_JNIUitls_getChineseFromC2
     // (3) 指定构造String编码 UTF-8
     jstring j_charset = (*env)->NewStringUTF(env,"UTF-8");
     // 将GB2312编码的字符串转换为UTF-8，返回给Java
-    jstring result = (jstring)(*env)->NewObject(str_cls,construct_mid,bArray,j_charset);
+    jstring result = (jstring)(*env)->NewObject(env,str_cls,construct_mid,bArray,j_charset);
     return result;
 }
 
@@ -226,7 +226,7 @@ char* jstringTostring(JNIEnv* env, jstring j_str) {
     jclass clsstring = (*env)->FindClass(env,"java/lang/String");
     jstring strencode = (*env)->NewStringUTF(env,"utf-8");
     jmethodID mid = (*env)->GetMethodID(env,clsstring, "getBytes","(Ljava/lang/String;)[B");
-    jbyteArray byteArr = (jbyteArray)(*env)->CallObjectMethod(j_str, mid,strencode);
+    jbyteArray byteArr = (jbyteArray)(*env)->CallObjectMethod(env,j_str, mid,strencode);
     jsize arrLen = (*env)->GetArrayLength(env,byteArr);
     jbyte* ba = (*env)->GetByteArrayElements(env,byteArr, JNI_FALSE);
     if (arrLen > 0) {
